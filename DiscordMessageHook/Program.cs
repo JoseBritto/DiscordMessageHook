@@ -24,4 +24,7 @@ app.MapPost("/sendMessage", async (HttpContext context, string webhookId) =>
     Console.WriteLine(responseBody);
     return Results.Content(responseBody, result.Content.Headers.ContentType?.MediaType, statusCode: (int)result.StatusCode);
 });
+var port = app.Configuration["Port"] ?? "4500";
+var ip = app.Configuration["IP"] ?? "127.0.0.1";
+app.Urls.Add($"http://{ip}:{port}");
 app.Run();
