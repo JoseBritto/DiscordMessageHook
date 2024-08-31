@@ -2,7 +2,17 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", x =>
+    {
+           x.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.MapPost("/sendMessage", async (HttpContext context, string webhookId) =>
